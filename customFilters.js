@@ -43,3 +43,22 @@ angular.module("customFilters", [])
 			}
 		}
 	})	 
+	
+	.filter('timestampToDate', function ($filter) {
+	    return function (data, propertyName) {
+			if (angular.isArray(data) && angular.isString(propertyName)) {
+				var results = [];
+				for (var i = 0; i < data.length; i++) {
+					var prop = $filter('date')(new Date(data[i][propertyName] * 1000), 'dd/MM/yyyy', 'UTC');
+				console.log(data[i][propertyName]);
+					if(results.indexOf(prop) === -1) {
+					   console.log(prop);
+					   results.push(prop);
+					}
+				}		 
+				return results;
+			} else {
+				return data;
+			}
+	    };
+	})	 	
