@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="previsaoTempo">
+<head>
+	<title>Previsão Tempo</title>
+	<script	src="angular.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+	<script>
+		angular.module("previsaoTempo", ["customFilters"]);
+	</script>	
+	<script src="controllers/previsaoTempo.js"></script>
+	<script src="filters/customFilters.js"></script>
+	<script src="controllers/previsaoListControllers.js"></script>
+</head>
+<body ng-controller="previsaoCtrl">
+	<div class="navbar navbar-inverse">
+		<a class="navbar-brand" href="#">PREVISÃO TEMPO</a>
+	</div>
+	
+	<div class="panel panel-default row" ng-controller="previsaoListCtrl">
+		<div class="col-xs-3">
+			<a ng-click="selectCategory()"
+				class="btn btn-block btn-default btn-lg">Home</a>
+			<a ng-repeat="item in data.list | uniqueDate:'dt'"
+				ng-click="selectCategory(item)" class=" btn btn-block btn-default btn-lg" ng-class="getCategoryClass(item)">
+				{{item}}				
+			</a>
+		</div>
+		
+		<div class="col-xs-8">
+			<div class="well" ng-repeat="item in data.list | filter:categoryFilterFn | range:selectedPage:pageSize">
+				<h3>
+					<strong>{{item.dt * 1000 | date:'dd/MM/yyyy HH:mm' :'UTC'}}</strong>				 				
+				</h3>
+				<span class="lead">Temp: {{item.main.temp}}</span>
+				<span class="lead">Wind: {{item.wind.speed}}</span>
+			</div>
+			<div class="pull-right btn-group">
+				<a ng-repeat="page in data.list | filter:categoryFilterFn | pageCount:pageSize"
+					ng-click="selectPage($index + 1)" class="btn btn-default"
+					ng-class="getPageClass($index + 1)">
+					{{$index + 1}}
+				</a>
+			</div>				
+		</div>
+	</div>
+</body>
+</html>
