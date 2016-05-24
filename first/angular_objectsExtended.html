@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Example</title>
+	<script src="bower_components/angular/angular.js"></script>
+	<script type="text/javascript">
+	var myData = {
+		name: "Adam",
+		weather: "sunny",
+		printMessages: function() {
+			console.log("Hello " + this.name + ". ");
+			console.log("Today is " + this.weather + ".");
+		}
+	};
+
+	var extendedObject = {
+		cidade: "Guarulhos"
+	}
+
+	angular.extend(extendedObject, myData);
+
+	console.log(extendedObject.weather);
+	console.log(extendedObject.cidade);
+
+	console.log("myObject: " + angular.isObject(myData));
+	console.log("myName: " + angular.isObject(5));
+
+
+</script>
+</head>
+<body>
+	This is a simple example
+</body>
+</html>
+
+ 
